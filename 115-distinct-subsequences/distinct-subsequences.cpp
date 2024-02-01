@@ -28,24 +28,28 @@ public:
         int n = s.length(), m = t.length();
 
         vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+        vector<int> prev(m + 1, 0), curr(m + 1, 0);
 
-        for (int i = 0; i <= n; ++i) {
-            dp[i][0] = 1;
-        }
+        prev[0] = curr[0] = 1;
+
+        // for (int i = 0; i <= n; ++i) {
+        //     dp[i][0] = 1;
+        // }
 
         for (int i = 1; i <= n; ++i) {
             for (int j = 1; j <= m; ++j) {
                 long val = 0;
                 if (s[i - 1] == t[j - 1]) {
-                    val += dp[i - 1][j - 1];
+                    val += prev[j - 1];
                 }
-                val += dp[i - 1][j];
+                val += prev[j];
 
-                dp[i][j] = val;
+                curr[j] = val;
             }
+            prev = curr;
         }
 
-        return dp[n][m];
+        return curr[m];
 
         // return solve(s, t, n - 1, m - 1, dp);
     }
