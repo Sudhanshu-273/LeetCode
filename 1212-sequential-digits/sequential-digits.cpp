@@ -14,6 +14,8 @@ public:
             if (v[i] >= low and v[i] <= high) {
                 ans.push_back(v[i]);
             }
+            if(v[i] > high)
+                break;
         }
 
         return ans;
