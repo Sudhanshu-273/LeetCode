@@ -1,22 +1,26 @@
 class Solution {
 public:
-
-    int noofsubarrays(vector<int>& v, int k) {
-        int presum = 0, count = 0;
-        map<int, int> mp;
-        mp[0] = 1;
-        for(int i = 0; i < v.size(); ++i){
-            presum += v[i];
-            if(mp.find(presum - k) != mp.end()) {
-                count += mp[presum - k];
+    int subarrays(vector<int>& nums, int goal) {
+        if(goal < 0)
+            return 0;
+        int l = 0, r = 0;
+        int count = 0;
+        int sum = 0;
+        int n = nums.size();
+        while (r < n) {
+            sum += nums[r];
+            while (sum > goal && l < n) {
+                sum -= nums[l];
+                ++l;
             }
-            mp[presum]++;
+            count += (r - l + 1);
+            ++r;
         }
         return count;
     }
 
-    int numSubarraysWithSum(vector<int>& v, int goal) {
-        int val = noofsubarrays(v, goal);
-        return val;
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        int val = subarrays(nums, goal) - subarrays(nums, goal - 1);
+        return val >= 0 ? val : 0;
     }
 };
