@@ -5,11 +5,10 @@ public:
         int low = 1, high = x;
         int ans = 1;
         while(low <= high) {
-            long long mid = ((high - low) / 2) + low;
-            if(mid * mid == x) {
-                return mid;
-            } else if(mid * mid < x) {
+            int mid = ((high - low) / 2) + low;
+            if(mid <= (x / mid)) {
                 ans = mid;
+                // cout << ans << " " << low << " " << high;
                 low = mid + 1;
             } else {
                 high = mid - 1;
